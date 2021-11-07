@@ -3,6 +3,7 @@ from pkg_resources import resource_filename
 import json
 import pytest
 
+from atlasclient.client import Atlas
 from atlasclient import client
 from atlasclient import exceptions
 GUID = '8bbea92b-d98c-4613-ae6e-1a9d0b4f344b'
@@ -452,6 +453,7 @@ class TestRelationshipREST():
 
 class TestDiscoveryREST():
     def test_search_attribute_get(self, mocker, atlas_client, search_attribute_response):
+        client = Atlas('localhost', port=21000, username='admin', password='admin')
         mocker.patch.object(atlas_client.search_attribute.client, 'get')
         atlas_client.search_attribute.client.get.return_value =  search_attribute_response 
         params = {'attrName': 'attrName', 'attrValue': 'attrVal', 'offset': '1'}
